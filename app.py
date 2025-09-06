@@ -373,7 +373,7 @@ def real_time_stats():
 @app.route('/map')
 @login_required
 def map_view():
-    df = pd.read_csv("forestfires.csv")  # ⚠️ still original dataset for map
+    df = pd.read_csv("forestfires_augmented.csv")
     if 'temp' not in df.columns:
         return "Error: 'temp' column not found in dataset."
     df['lat'] = 41.8 + (df['Y'] - df['Y'].mean()) * 0.01
@@ -456,7 +456,7 @@ def isi_boxplot():
 @app.route("/monthly_risk")
 @login_required
 def monthly_risk():
-    df = pd.read_csv("forestfires.csv")
+    df = pd.read_csv("forestfires_augmented.csv")
     month_map = {
         "jan": "January", "feb": "February", "mar": "March", "apr": "April",
         "may": "May", "jun": "June", "jul": "July", "aug": "August",
