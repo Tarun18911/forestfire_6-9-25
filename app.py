@@ -503,3 +503,4 @@ def features_info():
 if __name__ == '__main__':
     init_db()   # ✅ Ensure DB is created
     app.run(debug=True, use_reloader=True)
+
