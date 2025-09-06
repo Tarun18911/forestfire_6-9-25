@@ -1,0 +1,118 @@
+<!-- monthly_risk.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Monthwise Risks</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='images/forest_fire_bg.jpg') }}") no-repeat center center fixed;
+            background-size: 100% 100%;  /* 🔥 Stretches image fully */
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Back button */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            background: #ff6b6b;
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .back-btn:hover {
+            background: #d64b4b;
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            text-align: center;
+            margin: 80px 0 20px;
+            color: white;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+        }
+
+        table {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto 40px;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: none !important;
+            border-radius: 10px;
+            overflow: hidden;
+            border: none;   /* 🔥 Remove fat line */
+        }
+        th, td {
+            padding: 12px 15px;
+            border: none;
+            text-align: center;
+        }
+
+        th {
+            background: #ff6b6b;
+            color: white;
+            border-top: none;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .empty {
+            text-align: center;
+            color: white;
+            margin-top: 16px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+        }
+
+        /* 🔥 Remove any unwanted top bar */
+        header, nav, .navbar, .topbar, .site-header, .main-header {
+            display: none !important;
+        }
+
+        /* ✅ Final fix: remove any top border */
+        table, thead, tr, th {
+            border-top: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back to Home button -->
+    <a href="{{ url_for('home') }}" class="back-btn">⬅ Back to Home</a>
+
+    <h1>📊 Monthwise Risk Summary</h1>
+
+    {% if table_data and table_data|length > 0 %}
+    <table>
+        <thead>
+            <tr>
+                <th>Month</th>
+                <th>Low Risk</th>
+                <th>Medium Risk</th>
+                <th>High Risk</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in table_data %}
+            <tr>
+                <td>{{ row['Month'] }}</td>
+                <td>{{ row['Low Risk'] }}</td>
+                <td>{{ row['Medium Risk'] }}</td>
+                <td>{{ row['High Risk'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="empty">No data available to display.</p>
+    {% endif %}
+</body>
+</html>

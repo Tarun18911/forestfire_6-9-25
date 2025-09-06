@@ -1,0 +1,227 @@
+<!-- history.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction History - Forest Fire Detection</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), 
+                        url("{{ url_for('static', filename='images/forest_fire_bg.jpg') }}");
+            background-size: cover;
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .back-button {
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #4ecdc4;
+        }
+        
+        .page-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+        }
+        
+        .history-container {
+            background: rgba(26, 26, 46, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .history-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid #4ecdc4;
+        }
+        
+        .history-item.high-risk {
+            border-left-color: #ff6b6b;
+        }
+        
+        .history-item.medium-risk {
+            border-left-color: #ffa500;
+        }
+        
+        .history-item.low-risk {
+            border-left-color: #4ecdc4;
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .timestamp {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        .result-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .badge-high {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .badge-medium {
+            background: #ffa500;
+            color: black;
+        }
+        
+        .badge-low {
+            background: #4ecdc4;
+            color: white;
+        }
+        
+        .inputs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .input-item {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 10px;
+            border-radius: 6px;
+        }
+        
+        .input-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 5px;
+        }
+        
+        .input-value {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .no-history {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .probability {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="{{ url_for('home') }}" class="back-button">← Back to Home</a>
+
+        <a href="/try" class="back-button">Make New Prediction</a>
+    </div>
+
+    <h1 class="page-title">Prediction History</h1>
+    <p class="page-subtitle">Your previous forest fire risk assessments</p>
+
+    <div class="history-container">
+        {% if history %}
+            {% for entry in history %}
+                <div class="history-item {{ entry.result|lower }}-risk">
+                    <div class="history-header">
+                        <div class="timestamp">{{ entry.timestamp }}</div>
+                        <div class="result-badge badge-{{ entry.result|lower }}">
+                            {{ entry.result }} RISK
+                        </div>
+                    </div>
+                    
+                    <div class="probability">
+                        Probability: {{ (entry.probability * 100)|round(1) }}%
+                    </div>
+                    
+                   <div class="inputs-grid">
+    <div class="input-item">
+        <div class="input-label">Temperature</div>
+        <div class="input-value">{{ entry.inputs['temperature'] }}°C</div>
+    </div>
+    <div class="input-item">
+        <div class="input-label">Humidity</div>
+        <div class="input-value">{{ entry.inputs['humidity'] }}%</div>
+    </div>
+    <div class="input-item">
+        <div class="input-label">Wind Speed</div>
+        <div class="input-value">{{ entry.inputs['wind_speed'] }} km/h</div>
+    </div>
+    <div class="input-item">
+        <div class="input-label">Rainfall</div>
+        <div class="input-value">{{ entry.inputs['rainfall'] }} mm</div>
+    </div>
+    <div class="input-item">
+        <div class="input-label">FFMC</div>
+        <div class="input-value">{{ entry.inputs['ffmc'] }}</div>
+    </div>
+    <div class="input-item">
+        <div class="input-label">DMC</div>
+        <div class="input-value">{{ entry.inputs['dmc'] }}</div>
+    </div>
+    <div class="input-item">
+        <div class="input-label">DC</div>
+        <div class="input-value">{{ entry.inputs['dc'] }}</div>
+    </div>
+    <div class="input-item">
+        <div class="input-label">ISI</div>
+        <div class="input-value">{{ entry.inputs['isi'] }}</div>
+    </div>
+</div>
+
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-history">
+                <h3>No prediction history yet</h3>
+                <p>Make your first prediction to see it here!</p>
+                <a href="/try" class="back-button">Make First Prediction</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

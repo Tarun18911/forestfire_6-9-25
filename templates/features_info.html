@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Features Info - Forest Fire Prediction</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='images/forest_fire_bg.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .info-container {
+            background: rgba(0,0,0,0.8);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            line-height: 1.8;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.9);
+        }
+
+        .back-link {
+        margin-top: 20px;
+        display: inline-block;
+        padding: 12px 25px;
+        background: linear-gradient(45deg, #ff6b6b, #ff3b1d); /* fire tones */
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: 0.3s;
+    }
+
+    .back-link:hover {
+        background: linear-gradient(45deg, #ff944d, #e62e00); /* glowing ember effect */
+    }
+
+        .range {
+            font-size: 0.95em;
+            color: #ffd700;
+            margin-left: 15px;
+        }
+
+        .risk {
+            font-size: 0.9em;
+            color: #90ee90; /* light green for clarity */
+            margin-left: 60px;
+            display: block; /* ensures line break */
+        }
+    </style>
+</head>
+<body>
+    <div class="info-container">
+        <h1>Forest Fire Prediction - Feature Information</h1>
+
+        <p><b>Temperature (°C):</b> Higher temperatures increase the likelihood of fire ignition.<br>
+        <span class="range">Valid range: 2.2 – 33.3</span><br>
+        <span class="risk">Low: 2–15</span>
+        <span class="risk">Medium: 15–25</span>
+        <span class="risk">High: 25–33</span></p>
+
+        <p><b>Humidity (%):</b> Lower humidity increases fire risk, as vegetation dries faster.<br>
+        <span class="range">Valid range: 15 – 100</span><br>
+        <span class="risk">Low: 60–100</span>
+        <span class="risk">Medium: 30–60</span>
+        <span class="risk">High: 15–30</span></p>
+
+        <p><b>Rainfall (mm):</b> Rainfall reduces fire probability by moistening the ground and vegetation.<br>
+        <span class="range">Valid range: 0.0 – 6.4</span><br>
+        <span class="risk">Low: 3–6.4</span>
+        <span class="risk">Medium: 1–3</span>
+        <span class="risk">High: 0–1</span></p>
+
+        <p><b>Wind Speed (km/h):</b> Stronger winds spread fires more rapidly.<br>
+        <span class="range">Valid range: 0.4 – 9.4</span><br>
+        <span class="risk">Low: 0.4–3</span>
+        <span class="risk">Medium: 3–6</span>
+        <span class="risk">High: 6–9.4</span></p>
+
+        <p><b>FFMC (Fine Fuel Moisture Code):</b> Indicates dryness of fine fuels like grass and leaves.<br>
+        <span class="range">Valid range: 15.9 – 96.2</span><br>
+        <span class="risk">Low: 15–60</span>
+        <span class="risk">Medium: 60–80</span>
+        <span class="risk">High: 80–96</span></p>
+
+        <p><b>DMC (Duff Moisture Code):</b> Measures moisture in loosely compacted organic soil layers.<br>
+        <span class="range">Valid range: 0.87 – 291.3</span><br>
+        <span class="risk">Low: 0–100</span>
+        <span class="risk">Medium: 100–200</span>
+        <span class="risk">High: 200–291</span></p>
+
+        <p><b>DC (Drought Code):</b> Reflects deep soil and large fuel dryness (long-term drought).<br>
+        <span class="range">Valid range: 5.98 – 860.6</span><br>
+        <span class="risk">Low: 0–300</span>
+        <span class="risk">Medium: 300–600</span>
+        <span class="risk">High: 600–860</span></p>
+
+        <p><b>ISI (Initial Spread Index):</b> Represents expected fire spread rate at ignition.<br>
+        <span class="range">Valid range: 0.0 – 56.1</span><br>
+        <span class="risk">Low: 0–10</span>
+        <span class="risk">Medium: 10–25</span>
+        <span class="risk">High: 25–56</span></p>
+    </div>
+
+    <a href="{{ url_for('try_page') }}" class="back-link">← Back to Try Page</a>
+</body>
+</html>

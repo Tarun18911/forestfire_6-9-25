@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISI Box Plot</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f6f9; margin: 0; padding: 20px; text-align: center; }
+    .container { background: white; border-radius: 12px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); padding: 20px; max-width: 700px; margin: auto; }
+    h2 { color: #333; }
+    img { max-width: 100%; border-radius: 10px; margin: 20px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { padding: 12px; border: 1px solid #ddd; text-align: center; }
+    th { background: #007BFF; color: white; }
+    tr:nth-child(even) { background: #f9f9f9; }
+
+.back-home-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background-color: #dc3545; /* Bootstrap red */
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
+  transition: background 0.3s;
+}
+
+.back-home-btn:hover {
+  background-color: #a71d2a; /* darker red on hover */
+  text-decoration: none;
+}
+
+  </style>
+</head>
+<body>
+<a href="{{ url_for('home') }}" class="back-home-btn" aria-label="Back to Home">← Back to Home</a>
+  <div class="container">
+    <h2>Box Plot of ISI</h2>
+    <img id="boxplot" src="data:image/png;base64,{{Plot}}" alt="Box Plot">
+    
+    <h3>Statistical Summary</h3>
+    <table>
+      <tr>
+        <th>Min</th><th>Q1</th><th>Median (Q2)</th><th>Q3</th><th>Max</th><th>IQR</th>
+      </tr>
+      <tr>
+        <td>{{Min}}</td><td>{{Q1}}</td><td>{{Q2}}</td><td>{{Q3}}</td><td>{{Max}}</td><td>{{IQR}}</td>
+      </tr>
+    </table>
+
+    <h3>Outliers</h3>
+    <p>{{Outliers}}</p>
+  </div>
+</body>
+</html>

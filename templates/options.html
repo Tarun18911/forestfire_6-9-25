@@ -1,0 +1,109 @@
+<!-- options.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Feature for Boxplot</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url("{{ url_for('static', filename='images/forest_fire_bg.jpg') }}") no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    .header {
+      margin-top: 40px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px 40px;
+      border-radius: 15px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+    }
+
+    .sub-text {
+      margin-top: 10px;
+      font-size: 1.2em;
+      color: #ffb347;
+    }
+
+    .button-grid {
+      margin-top: 60px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px 50px; /* row gap 30px, column gap 50px */
+      width: 70%;
+      max-width: 700px;
+    }
+
+    .btn {
+      padding: 18px 30px;
+      font-size: 1.1em;
+      font-weight: bold;
+      background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(45deg, #ff5252, #ff7b38);
+    }
+
+    .back-btn {
+      margin-top: 50px;
+      padding: 12px 25px;
+      background: #333;
+      border-radius: 30px;
+      text-decoration: none;
+      color: #fff;
+      font-size: 1em;
+      transition: background 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📊 Choose a Feature</h1>
+    <p class="sub-text">Select a feature to view its Boxplot</p>
+  </div>
+
+  <div class="button-grid">
+    <a href="/temp" class="btn">🌡️ Temperature</a>
+    <a href="/rh" class="btn">💧 Relative Humidity</a>
+    <a href="/wind" class="btn">💨 Wind</a>
+    <a href="/rain" class="btn">🌧️ Rain</a>
+    <a href="/ffmc" class="btn">🔥 FFMC</a>
+    <a href="/dmc" class="btn">🔥 DMC</a>
+    <a href="/dc" class="btn">🔥 DC</a>
+    <a href="/isi" class="btn">🔥 ISI</a>
+  </div>
+
+  <a href="{{ url_for('home') }}" class="back-btn">← Back to Home</a>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forest Fire Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='images/forest_fire_bg.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            text-align: center;
+            margin-top: 30px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            margin: 0;
+        }
+
+        .header p {
+            color: #ff6b6b;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        /* ✅ Button layout */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 120px; /* keep near bottom */
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+            gap: 48px; /* ≈ 3-finger space */
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            min-width: 200px; /* same width */
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(45deg, #ff5252, #ff7b38);
+        }
+
+        .result-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .result {
+            font-size: 2em;
+            font-weight: bold;
+            padding: 10px 30px;
+            border-radius: 25px;
+        }
+
+        .result.high {
+            color: #ff0000;
+            background: rgba(255, 0, 0, 0.2);
+            border: 2px solid #ff0000;
+        }
+
+        .result.medium {
+            color: #ffa500;
+            background: rgba(255, 165, 0, 0.2);
+            border: 2px solid #ffa500;
+        }
+
+        .result.low {
+            color: #00ff00;
+            background: rgba(0, 255, 0, 0.2);
+            border: 2px solid #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌲 Forest Fire Risk Prediction 🔥</h1>
+    </div>
+
+    <div class="button-container">
+        <div class="button-row">
+            <a href="/try" class="btn">🔥 Try Prediction</a>
+            <a href="/history" class="btn">📋 View History</a>
+        </div>
+        <div class="button-row">
+            <a href="/map" class="btn">🗺️ View Heatmap</a>
+            <a href="/options" class="btn">📊 Show Boxplots</a>
+        </div>
+        <div class="button-row">
+            <a href="/monthly_risk" class="btn">📅 Predict Monthwise Risks</a>
+        </div>
+    </div>
+
+    {% if result %}
+
+    <div class="result-container">
+        <div class="result {{ result|lower }}">
+            Predicted Risk: {{ result }}
+        </div>
+    </div>
+    {% endif %}
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<!-- ✅ Auth Section -->
+<div class="auth-options">
+    <p style="display:inline; margin-right:10px;">Do you want to</p>
+    <a href="{{ url_for('login') }}" class="auth-btn">Login</a>
+    <span class="or-text">OR</span>
+    <a href="{{ url_for('register') }}" class="auth-btn">Register</a>
+    <p style="display:inline; margin-left:10px;">again?</p>
+</div>
+
+<style>
+    /* ✅ Auth Box Styling (updated to stick bottom & inline) */
+    .auth-options {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 20px;
+        padding: 15px 25px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        font-family: Arial, sans-serif;
+        z-index: 9999; /* stay on top */
+    }
+
+    .auth-options p {
+        margin: 0;
+        font-size: 1.1em;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .auth-btn {
+        padding: 10px 20px;
+        border-radius: 50px;
+        background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+        color: white;
+        font-size: 1em;
+        font-weight: bold;
+        text-decoration: none;
+        transition: 0.3s;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .auth-btn:hover {
+        background: linear-gradient(45deg, #ff5252, #ff7b38);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    }
+
+    .or-text {
+        font-size: 1em;
+        font-weight: bold;
+        color: #ffcc70;
+    }
+</style>
+
+
+</body>
+</html>
